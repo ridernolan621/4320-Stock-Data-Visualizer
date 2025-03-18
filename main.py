@@ -55,7 +55,6 @@ def get_symbol(symbol, time):
 
     if response.status_code == 200:
         data = response.json()
-        filter_data(data, frame)
         return filter_data(data, frame)
     else:
         return response.status_code
