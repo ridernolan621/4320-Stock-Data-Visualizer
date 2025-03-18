@@ -18,8 +18,8 @@ def main():
     print("----------------------------")
     time = validate_time(time_series)
 
-    get_symbol(symbol, time)
-    render_chart(chart_type)
+    opens, highs, lows, closes = get_symbol(symbol, time)
+    render_chart(chart_type, opens, highs, lows, closes)
 
 def validate_chart(chart):
     while chart not in ['1', '2']:
@@ -35,13 +35,19 @@ def validate_time(time):
 
 def get_symbol(symbol, time):
     series = None
+    frame = None
+
     if time == 1:
+        frame = "Time Series (5min)"
         series = "TIME_SERIES_INTRADAY"
     elif time == 2:
+        frame = "Time Series (Daily)"
         series = "TIME_SERIES_DAILY"
     elif time == 3:
+        frame = "Weekly Time Series"
         series = "TIME_SERIES_WEEKLY"
     elif time == 4:
+        frame = "Monthly Time Series"
         series = "TIME_SERIES_MONTHLY"
 
     url = f'https://www.alphavantage.co/query?function={series}&symbol={symbol}&interval=5min&apikey={key.key}'
@@ -49,20 +55,42 @@ def get_symbol(symbol, time):
 
     if response.status_code == 200:
         data = response.json()
-        print(data)
+        filter_data(data, frame)
+        return filter_data(data, frame)
     else:
         return response.status_code
 
-def render_chart(chart_type):
-    if chart_type == 1:
-        line_chart()
-    elif chart_type == 2:
-        bar_chart()
+def filter_data(data, frame):
+    if frame == None:
+        print("Error Getting Frame")
+        quit()
 
-def line_chart():
+    time_series = data.get(f"{frame}", {})
+
+    open_prices = []
+    high_prices = []
+    low_prices = []
+    close_prices = []
+
+    for timestamp, values in time_series.items():
+        open_prices.append(float(values["1. open"]))
+        high_prices.append(float(values["2. high"]))
+        low_prices.append(float(values["3. low"]))
+        close_prices.append(float(values["4. close"]))
+
+    return open_prices, high_prices, low_prices, close_prices
+
+
+def render_chart(chart_type, opens, highs, lows, closes):
+    if chart_type == 1:
+        line_chart(closes)
+    elif chart_type == 2:
+        bar_chart(opens, highs, lows, closes)
+
+def line_chart(closes):
     return 0
 
-def bar_chart():
+def bar_chart(opens, highs, lows, closes):
     return 0
 
 if __name__ == "__main__":
