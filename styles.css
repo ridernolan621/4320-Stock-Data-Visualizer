@@ -1,7 +1,34 @@
 /* change background color */
 .background
 {
-    fill: #fcba03;
+    fill: #faf9f6;
 }
+/* change title style */
+.title
+{
+    font-family: "Times New Roman", 'Times New Roman', Times, serif;
+    font-size: 30px;
+    fill: black;
+}
+/* change line color */
+.line
+{
+    stroke: pink;
+    stroke-width: 3px;
+}
+/* change data points */
+.dot
+{
+    fill: #908e9c;
+    stroke: #908e9c;
+    stroke-width: 0.1px;
+}
+
+.area
+{
+    fill: #faf9f6 !important;
+}
+
+
 
 
