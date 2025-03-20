@@ -87,10 +87,21 @@ def render_chart(chart_type, opens, highs, lows, closes):
         bar_chart(opens, highs, lows, closes)
 
 def line_chart(closes):
-    return 0
+    line_chart = pygal.Line()
+    line_chart.title = 'Stock Closing Prices Over Time'
+    line_chart.add('Close', closes)
+    line_chart.render_to_file('line_chart.svg')
+    print("Line chart saved as 'line_chart.svg'")
 
 def bar_chart(opens, highs, lows, closes):
-    return 0
+    bar_chart = pygal.Bar()
+    bar_chart.title = 'Stock Prices (Open, High, Low, Close)'
+    bar_chart.add('Open', opens)
+    bar_chart.add('High', highs)
+    bar_chart.add('Low', lows)
+    bar_chart.add('Close', closes)
+    bar_chart.render_to_file('bar_chart.svg')
+    print("Bar chart saved as 'bar_chart.svg'")
 
 if __name__ == "__main__":
     main()
