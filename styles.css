@@ -26,8 +26,16 @@
 
 .area
 {
-    fill: #faf9f6 !important;
+    fill: rgba(0, 128, 255, 0.3) !important; /* Force the correct fill */
+    stroke: none !important;
 }
+
+/* Ensure the area below the line is filled with a light blue */
+.color-0 .area {
+    fill: rgba(0, 128, 255, 0.3) !important; /* Force light blue fill */
+    stroke: none;
+}
+
 
 
 

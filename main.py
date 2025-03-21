@@ -89,7 +89,7 @@ def render_chart(chart_type, opens, highs, lows, closes):
 def line_chart(closes):
     line_chart = pygal.Line()
     line_chart.title = 'Stock Closing Prices Over Time'
-    line_chart.add('Close', closes)
+    line_chart.add('Close', closes, fill_opacity=0.3)
     #embeds css file
     line_chart.render_to_file('line_chart.svg', css=['styles.css'])
     print("Line chart saved as 'line_chart.svg'")
