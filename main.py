@@ -81,28 +81,54 @@ def filter_data(data, frame):
 
 
 def render_chart(chart_type, opens, highs, lows, closes):
+    from pygal import Line, Bar
+    from pygal.style import Style
+
+    custom_style = Style(
+        background='white',
+        plot_background='white',
+        foreground='black',
+        foreground_strong='black',
+        foreground_subtle='grey',
+        colors=('blue', 'green', 'red', 'orange')
+    )
+
     if chart_type == 1:
-        line_chart(closes)
-        return 'line_chart.svg'
+        chart = Line(style=custom_style)
+        chart.title = 'Stock Prices (Line Chart)'
+        chart.add('Open', opens)
+        chart.add('High', highs)
+        chart.add('Low', lows)
+        chart.add('Close', closes)
+        chart.render_to_file('static/line_chart.svg')
     elif chart_type == 2:
-        bar_chart(opens, highs, lows, closes)
-        return 'bar_chart.svg'
+        chart = Bar(style=custom_style)
+        chart.title = 'Stock Prices (Bar Chart)'
+        chart.add('Open', opens)
+        chart.add('High', highs)
+        chart.add('Low', lows)
+        chart.add('Close', closes)
+        chart.render_to_file('static/bar_chart.svg')
+
+    print("Chart saved as SVG!")
+
 
 def line_chart(closes):
-    chart = pygal.Line()
-    chart.title = 'Stock Closing Prices Over Time'
-    chart.add('Close', closes, fill_opacity=0.3)
-    chart.render_to_file('static/line_chart.svg', css=['styles.css'])
+    line_chart = pygal.Line()
+    line_chart.title = 'Stock Closing Prices Over Time'
+    line_chart.add('Close', closes, fill_opacity=0.3)
+    #embeds css file
+    line_chart.render_to_file('line_chart.svg', css=['styles.css'])
     print("Line chart saved as 'line_chart.svg'")
 
 def bar_chart(opens, highs, lows, closes):
-    chart = pygal.Bar()
-    chart.title = 'Stock Prices (Open, High, Low, Close)'
-    chart.add('Open', opens)
-    chart.add('High', highs)
-    chart.add('Low', lows)
-    chart.add('Close', closes)
-    chart.render_to_file('static/bar_chart.svg', css=['styles.css'])
+    bar_chart = pygal.Bar()
+    bar_chart.title = 'Stock Prices (Open, High, Low, Close)'
+    bar_chart.add('Open', opens)
+    bar_chart.add('High', highs)
+    bar_chart.add('Low', lows)
+    bar_chart.add('Close', closes)
+    bar_chart.render_to_file('bar_chart.svg', css=['styles.css'])
     print("Bar chart saved as 'bar_chart.svg'")
 
 if __name__ == "__main__":
