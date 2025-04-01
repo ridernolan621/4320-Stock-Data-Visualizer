@@ -1,6 +1,6 @@
 #app.py
 from flask import Flask, render_template, request
-from key import API_KEY
+from key import key
 from main import get_symbol, render_chart
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def index():
     chart_filename = render_chart(chart_type, opens, highs, lows, closes)
     chart_created = True
 
-  return render_temolate('index.html', chart_created=chart_created, chart_filename=chart_filename)
+  return render_template('index.html', chart_created=chart_created, chart_filename=chart_filename)
 
 if __name__ == '__main__':
   app.run(debug=True)

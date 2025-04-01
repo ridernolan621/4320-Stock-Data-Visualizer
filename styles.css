@@ -1,42 +1,39 @@
-/* change background color */
-.background
-{
-    fill: #faf9f6;
+/* Set background and plot area to white */
+.background {
+    fill: white;
 }
-/* change title style */
-.title
-{
-    font-family: "Times New Roman", 'Times New Roman', Times, serif;
-    font-size: 30px;
+
+.plot-background {
+    fill: white;
+}
+
+/* Set gridlines and axis text to gray or black */
+.axis line,
+.axis path {
+    stroke: #aaa;
+}
+
+.axis text {
     fill: black;
 }
-/* change line color */
-.line
-{
-    stroke: pink;
-    stroke-width: 3px;
-}
-/* change data points */
-.dot
-{
-    fill: #908e9c;
-    stroke: #908e9c;
-    stroke-width: 0.1px;
+
+/* Style series lines and bars */
+.line-0, .bar-0 {
+    stroke: steelblue;
+    fill: steelblue;
 }
 
-.area
-{
-    fill: rgba(0, 128, 255, 0.3) !important; /* Force the correct fill */
-    stroke: none !important;
+.line-1, .bar-1 {
+    stroke: orange;
+    fill: orange;
 }
 
-/* Ensure the area below the line is filled with a light blue */
-.color-0 .area {
-    fill: rgba(0, 128, 255, 0.3) !important; /* Force light blue fill */
-    stroke: none;
+.line-2, .bar-2 {
+    stroke: green;
+    fill: green;
 }
 
-
-
-
-
+.line-3, .bar-3 {
+    stroke: red;
+    fill: red;
+}

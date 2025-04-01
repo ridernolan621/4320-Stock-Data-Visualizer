@@ -26,9 +26,9 @@
         <button type="submit">Generate Chart</button>
     </form>
 
-    {% if chart_created %}
+    {% if chart_created and chart_filename %}
         <h2>Chart Generated!</h2>
-        <img src="{{ url_for('static', filename=chart_filename.split('static/')[-1]) }}" width="600">
+        <img src="{{ url_for('static', filename=chart_filename.split('static/')[-1]) }}" width="600" alt="Stock Chart">
     {% endif %}
 </body>
 </html>
