@@ -81,10 +81,37 @@ def filter_data(data, frame):
 
 
 def render_chart(chart_type, opens, highs, lows, closes):
+    from pygal import Line, Bar
+    from pygal.style import Style
+
+    custom_style = Style(
+        background='white',
+        plot_background='white',
+        foreground='black',
+        foreground_strong='black',
+        foreground_subtle='grey',
+        colors=('blue', 'green', 'red', 'orange')
+    )
+
     if chart_type == 1:
-        line_chart(closes)
+        chart = Line(style=custom_style)
+        chart.title = 'Stock Prices (Line Chart)'
+        chart.add('Open', opens)
+        chart.add('High', highs)
+        chart.add('Low', lows)
+        chart.add('Close', closes)
+        chart.render_to_file('line_chart.svg')
     elif chart_type == 2:
-        bar_chart(opens, highs, lows, closes)
+        chart = Bar(style=custom_style)
+        chart.title = 'Stock Prices (Bar Chart)'
+        chart.add('Open', opens)
+        chart.add('High', highs)
+        chart.add('Low', lows)
+        chart.add('Close', closes)
+        chart.render_to_file('bar_chart.svg')
+
+    print("Chart saved as SVG!")
+
 
 def line_chart(closes):
     line_chart = pygal.Line()
