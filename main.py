@@ -18,7 +18,7 @@ def main():
     print("----------------------------")
     time = validate_time(time_series)
 
-    opens, highs, lows, closes = get_symbol(symbol, time)
+    opens, highs, lows, closes, frame = get_symbol(symbol, time)
     render_chart(chart_type, opens, highs, lows, closes)
 
 def validate_chart(chart):
@@ -77,10 +77,11 @@ def filter_data(data, frame):
         low_prices.append(float(values["3. low"]))
         close_prices.append(float(values["4. close"]))
 
-    return open_prices, high_prices, low_prices, close_prices
+    return open_prices, high_prices, low_prices, close_prices, frame
 
 
 def render_chart(chart_type, opens, highs, lows, closes):
+    import os
     from pygal import Line, Bar
     from pygal.style import Style
 
@@ -93,30 +94,32 @@ def render_chart(chart_type, opens, highs, lows, closes):
         colors=('blue', 'green', 'red', 'orange')
     )
 
+
     if chart_type == 1:
         chart = Line(style=custom_style)
         chart.title = 'Stock Prices (Line Chart)'
-        chart.add('Open', opens)
-        chart.add('High', highs)
-        chart.add('Low', lows)
         chart.add('Close', closes)
-        chart.render_to_file('static/line_chart.svg')
+        filename = 'line_chart.svg'
+
     elif chart_type == 2:
-        chart = Bar(style=custom_style)
+        chart = Bar(style=custom_style, width=1200, height=600)
         chart.title = 'Stock Prices (Bar Chart)'
         chart.add('Open', opens)
         chart.add('High', highs)
         chart.add('Low', lows)
         chart.add('Close', closes)
-        chart.render_to_file('static/bar_chart.svg')
+        filename = 'bar_chart.svg'
 
-    print("Chart saved as SVG!")
+    chart.render_to_file(os.path.join("static", filename))
+
+    return filename
 
 
 def line_chart(closes):
     line_chart = pygal.Line()
     line_chart.title = 'Stock Closing Prices Over Time'
     line_chart.add('Close', closes, fill_opacity=0.3)
+    
     #embeds css file
     line_chart.render_to_file('line_chart.svg', css=['styles.css'])
     print("Line chart saved as 'line_chart.svg'")
